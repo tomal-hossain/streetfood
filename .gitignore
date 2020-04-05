@@ -1,0 +1,5 @@
+.vs/
+StreetFood.Domain/bin/
+StreetFood.Domain/obj/
+StreetFood.Service/bin/
+StreetFood.Service/obj/
