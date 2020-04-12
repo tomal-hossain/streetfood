@@ -5,6 +5,7 @@
                 <h2> Sign In </h2>
                 <form nz-form [formGroup]="loginForm" (ngSubmit)="submitForm()">
                     <nz-spin *ngIf="isLoadingFlag" class="m-b-5" nzSimple></nz-spin>
+                    <nz-alert *ngIf="errorMessage" nzType="error" [nzMessage]="errorMessage" nzShowIcon></nz-alert>
                     <nz-form-item>
                         <nz-form-label nzNoColon nzFor="email">Email</nz-form-label>
                         <nz-form-control [nzErrorTip]="emailErrorTpl">

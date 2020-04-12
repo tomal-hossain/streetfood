@@ -3,14 +3,23 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  {
-    path: 'authentication',
-    loadChildren: () => import('./authentication/authentication.module').then(m => m.AutheticationModule)
-  }
+    {
+      path: '',
+      redirectTo: 'food',
+      pathMatch: 'full'
+    },
+    {
+      path: 'food',
+      loadChildren: () => import('./food/food.module').then(m => m.FoodModule)
+    },
+    {
+      path: 'authentication',
+      loadChildren: () => import('./authentication/authentication.module').then(m => m.AutheticationModule)
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -12,11 +12,11 @@ export class AuthService {
     apiUrl: string;
 
     constructor(private http: HttpClient) {
-        this.apiUrl = environment.apiUrl;
+        this.apiUrl = environment.apiUrl + '/auth';
     }
 
     signIn(model: ISignIn) {
-        return this.http.post(this.apiUrl + '/login', model);
+        return this.http.post(this.apiUrl + '/signin', model);
     }
 
     signUp(model: ISignUp) {
@@ -24,11 +24,15 @@ export class AuthService {
     }
 
     forgotPassword(model: IEmail) {
-        return this.http.post(this.apiUrl + '/resetpassword', model);
+        return this.http.post(this.apiUrl + '/forgotpassword', model);
     }
 
-    saveToken(token: string) {
-        localStorage.setItem('userToken', token);
+    resetPassword(model: ISignIn, token: string) {
+        return this.http.post(this.apiUrl + '/resetpassword/' + token, model);
+    }
+
+    saveToken(response: any) {
+        localStorage.setItem('userToken', response.token);
     }
 
     getToken(): string {

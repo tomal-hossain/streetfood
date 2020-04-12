@@ -1,5 +1,8 @@
+import { AuthService } from './../../../shared/service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ISignUp } from 'src/shared/interface/sign-up';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sign-up',
@@ -9,8 +12,13 @@ export class SignUpComponent implements OnInit {
 
     signUpForm: FormGroup;
     isLoadingFlag: boolean;
+    errorMessage: string;
 
-    constructor(private fb: FormBuilder) { }
+    constructor(
+        private fb: FormBuilder,
+        private authService: AuthService,
+        private router: Router
+        ) { }
 
     ngOnInit() {
         this.signUpForm = this.fb.group({
@@ -37,10 +45,25 @@ export class SignUpComponent implements OnInit {
         });
     }
 
-    submitForm(): void {
+    submitForm(formValue): void {
+        this.errorMessage = null;
         this.makeFormDirty(this.signUpForm);
         if  (this.signUpForm.valid) {
             this.isLoadingFlag = true;
+            const model: ISignUp = {
+                name: formValue.name,
+                email: formValue.email,
+                password: formValue.password
+            };
+            this.authService.signUp(model)
+                .subscribe(response => {
+                    this.router.navigate(['authentication/registration-success']);
+                }, error => {
+                    this.isLoadingFlag = false;
+                    if (error.status === 400) {
+                        this.errorMessage = error.error;
+                    }
+                });
         }
     }
 }

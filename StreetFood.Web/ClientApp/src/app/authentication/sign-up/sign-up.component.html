@@ -3,8 +3,9 @@
         <div nz-col nzSpan="10">
             <nz-card class="form-bg border m-t-50">
                 <h2> Sign Up </h2>
-                <form nz-form [formGroup]="signUpForm" (ngSubmit)="submitForm()">
+                <form nz-form [formGroup]="signUpForm" (ngSubmit)="submitForm(signUpForm.value)">
                     <nz-spin *ngIf="isLoadingFlag" class="m-b-5" nzSimple></nz-spin>
+                    <nz-alert *ngIf="errorMessage" nzType="error" [nzMessage]="errorMessage" nzShowIcon></nz-alert>
                     <nz-form-item>
                         <nz-form-label nzRequired nzNoColon nzFor="name">Name</nz-form-label>
                         <nz-form-control [nzErrorTip]="nameErrorTpl">

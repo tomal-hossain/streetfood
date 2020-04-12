@@ -1,3 +1,4 @@
+import { AuthService } from './../../../shared/service/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,8 +10,13 @@ export class ForgotPasswordComponent implements OnInit {
 
     forgotPasswordForm: FormGroup;
     isLoadingFlag: boolean;
+    errorMessage: string;
+    isSuccessMessage = false;
 
-    constructor(private fb: FormBuilder) { }
+    constructor(
+        private fb: FormBuilder,
+        private authService: AuthService
+        ) { }
 
     ngOnInit() {
         this.forgotPasswordForm = this.fb.group({
@@ -18,10 +24,23 @@ export class ForgotPasswordComponent implements OnInit {
         });
     }
 
-
     submitForm() {
+        this.errorMessage = null;
+        this.isSuccessMessage = false;
         if  (this.forgotPasswordForm.valid) {
             this.isLoadingFlag = true;
+            this.authService.forgotPassword(this.forgotPasswordForm.value)
+                .subscribe(response => {
+                    this.isSuccessMessage = true;
+                    this.isLoadingFlag = false;
+                }, error => {
+                    if (error.status === 400) {
+                        this.errorMessage = error.error;
+                    } else {
+                        this.errorMessage = 'Something went wrong. Please try again.';
+                    }
+                    this.isLoadingFlag = false;
+                });
         }
     }
 

@@ -5,14 +5,20 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NzFormModule, NzInputModule, NzButtonModule, NzGridModule, NzSpinModule } from 'ng-zorro-antd';
+import { NzFormModule, NzInputModule, NzButtonModule, NzGridModule, NzSpinModule, NzAlertModule } from 'ng-zorro-antd';
 import { CommonModule } from '@angular/common';
+import { RegistraionSuccessComponent } from './registraion-success/registraion-success.component';
+import { ConfirmSuccessComponent } from './confirm-success/confirm-success.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
     declarations: [
         LoginComponent,
         SignUpComponent,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        RegistraionSuccessComponent,
+        ConfirmSuccessComponent,
+        ResetPasswordComponent
     ],
     imports: [
         CommonModule,
@@ -23,7 +29,8 @@ import { CommonModule } from '@angular/common';
         ReactiveFormsModule,
         NzButtonModule,
         NzGridModule,
-        NzSpinModule
+        NzSpinModule,
+        NzAlertModule
     ],
     providers: [],
 })
