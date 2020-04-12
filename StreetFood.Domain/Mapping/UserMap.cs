@@ -14,7 +14,7 @@ namespace StreetFood.Domain.Mapping
             builder.Property(x => x.Name).IsRequired().HasColumnType("nvarchar(128)");
             builder.Property(x => x.Email).IsRequired().HasColumnType("nvarchar(64)");
             builder.Property(x => x.IsConfirmed).HasDefaultValue(false).HasColumnType("bit");
-            builder.Property(x => x.Pasword).IsRequired().HasColumnType("nvarchar(256)");
+            builder.Property(x => x.Password).IsRequired().HasColumnType("nvarchar(256)");
         }
     }
 }

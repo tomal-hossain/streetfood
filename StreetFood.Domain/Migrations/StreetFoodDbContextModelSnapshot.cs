@@ -184,7 +184,7 @@ namespace StreetFood.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("Pasword")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(256)");
 

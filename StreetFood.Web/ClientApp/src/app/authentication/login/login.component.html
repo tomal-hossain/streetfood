@@ -1,0 +1,40 @@
+<div class="w-100 h-100 bg">
+    <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+        <div nz-col nzSpan="10">
+            <nz-card class=" form-bg border m-t-50">
+                <h2> Sign In </h2>
+                <form nz-form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+                    <nz-spin *ngIf="isLoadingFlag" class="m-b-5" nzSimple></nz-spin>
+                    <nz-alert *ngIf="errorMessage" nzType="error" [nzMessage]="errorMessage" nzShowIcon></nz-alert>
+                    <nz-form-item>
+                        <nz-form-label nzNoColon nzFor="email">Email</nz-form-label>
+                        <nz-form-control [nzErrorTip]="emailErrorTpl">
+                            <nz-input-group nzPrefixIcon="mail">
+                                <input class="p-20" id="email" nz-input formControlName="email" placeholder="Email" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzNoColon nzFor="password">Password</nz-form-label>
+                        <a class="float-right p-t-10" routerLink="../forgot-password">Forgot password</a>
+                        <nz-form-control nzErrorTip="Please input your Password!">
+                            <nz-input-group nzPrefixIcon="lock">
+                                <input class="p-20" id="password" type="password" nz-input formControlName="password" placeholder="Password" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <span>Don't have any accout? <a routerLink="../sign-up">Sign Up</a> now!</span>
+                        <nz-form-control>
+                            <button [disabled]="isLoadingFlag" nz-button class="float-right" nzType="primary">Sign In</button>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <ng-template #emailErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('email')">The input is not valid E-mail!</ng-container>
+                        <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
+                    </ng-template>            
+                </form>
+            </nz-card>
+        </div>
+    </div>
+</div>
