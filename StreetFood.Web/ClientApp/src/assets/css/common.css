@@ -10,9 +10,12 @@
 .float-right{
     float: right;
 }
-.has-form-error{
-    color: crimson;
+.cursor-pointer{
+    cursor: pointer;
 }
-.has-form-success{
-    color: green;
+.ant-menu-horizontal{
+    line-height: 64px;
+}
+.ant-select-selection{
+    padding: 10px;
 }

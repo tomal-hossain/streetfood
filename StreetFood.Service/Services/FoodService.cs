@@ -17,9 +17,18 @@ namespace StreetFood.Service.Services
             _context = context;
         }
 
-        public List<Food> GetAllFoods()
+        public List<Food> GetAllFoods(int userId = 0)
         {
-            return _context.Food.ToList();
+            if (userId > 0)
+            {
+                return _context.Food
+                    .Where(x => x.AddedById == userId)
+                    .Include(x => x.AddedBy)
+                    .ToList();
+            }
+            return _context.Food
+                .Include(x => x.AddedBy)
+                .ToList();
         }
 
         public Food GetFood(int id)
@@ -32,18 +41,19 @@ namespace StreetFood.Service.Services
                 .FirstOrDefault();
         }
 
-        public int AddFood(int userId, Food food)
+        public bool AddFood(int userId, Food food)
         {
             try
             {
                 food.AddedById = userId;
                 food.AddedAt = DateTime.Now;
+                _context.Food.Add(food);
                 _context.SaveChanges();
-                return food.Id;
+                return true;
             }
             catch
             {
-                return -1;
+                return false;
             }
         }
 
@@ -81,12 +91,18 @@ namespace StreetFood.Service.Services
             try
             {
                 _context.Food.Remove(food);
+                _context.SaveChanges();
                 return true;
             }
             catch
             {
                 return false;
             }
+        }
+
+        public List<Country> GetAllCountries()
+        {
+            return _context.Country.ToList();
         }
     }
 }

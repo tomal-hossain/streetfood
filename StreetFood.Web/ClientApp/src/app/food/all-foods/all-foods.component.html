@@ -1,1 +1,27 @@
-<p>all-food works!</p>
+<nz-table
+    class="w-90 m-auto"
+    #tableRef
+    nzShowPagination
+    [nzData]="foodList"
+    >
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Added By</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of tableRef.data">
+            <td>{{ data.name }}</td>
+            <td>
+                <nz-avatar [nzShape]="'square'" [nzSize]="100" [nzIcon]="'camera'" [nzSrc]="data.imageUrl ? imageBaseUrl + data.imageUrl : null"></nz-avatar>
+            </td>
+            <td>{{ data.addedByName }}</td>
+            <td>
+                <a routerLink="/food/view-food/{{data.id}}">View</a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

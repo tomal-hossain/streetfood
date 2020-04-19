@@ -1,3 +1,4 @@
+import { FoodComponent } from './food/food.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 

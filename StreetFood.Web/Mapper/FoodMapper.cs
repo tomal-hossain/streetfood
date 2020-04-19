@@ -17,8 +17,12 @@ namespace StreetFood.Web.Mapper
                 .ForMember(dest => dest.PopularInList, opt => opt.MapFrom(src => src.PopularIn.Select(x => x.Country).ToList()));
             CreateMap<FoodModel, Food>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.PopularIn, opt => opt.MapFrom(model => model));
+                .ForMember(dest => dest.AddedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.AddedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.AddedById, opt => opt.Ignore())
+                .ForMember(dest => dest.PopularIn, opt => opt.MapFrom(src => src.PopularInList));
             CreateMap<Country, CountryFood>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CountryId, opt => opt.MapFrom(src => src.Id));
         }
     }

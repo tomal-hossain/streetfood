@@ -8,6 +8,7 @@ using StreetFood.Domain.Models;
 using StreetFood.Web.Models;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace StreetFood.Web.Services
             var credentials = new SigningCredentials(byteKey, SecurityAlgorithms.HmacSha256);
             var claim = new[]
             {
-                new Claim(ClaimTypes.Sid, id.ToString()),
+                new Claim("userid", id.ToString()),
                 new Claim(ClaimTypes.Name, Guid.NewGuid().ToString())
             };
             var jwtToken = new JwtSecurityToken(
@@ -50,7 +51,21 @@ namespace StreetFood.Web.Services
 
         public int GetUserIdFromRequest(HttpRequest Request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string header = Request.Headers["Authorization"];
+                string[] tokenArray = header.Split(' ');
+                string accessToken = tokenArray[1];
+                var jwtToken = new JwtSecurityToken(accessToken);
+                var claim = jwtToken.Claims.FirstOrDefault(x => x.Type.Equals("userid", StringComparison.InvariantCultureIgnoreCase));
+                int userId = Int32.Parse(claim.Value);
+                return userId;
+
+            }
+            catch
+            {
+                return -1;
+            }
         }
 
         public string GetEmailFromToken(string token)

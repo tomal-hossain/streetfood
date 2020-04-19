@@ -12,7 +12,7 @@ export class AuthService {
     apiUrl: string;
 
     constructor(private http: HttpClient) {
-        this.apiUrl = environment.apiUrl + '/auth';
+        this.apiUrl = environment.apiUrl + '/api/auth';
     }
 
     signIn(model: ISignIn) {

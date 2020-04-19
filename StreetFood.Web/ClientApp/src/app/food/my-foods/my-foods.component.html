@@ -1,1 +1,34 @@
-<p>my-foods works!</p>
+<div class="w-90 m-auto">
+    <nz-table
+        #tableRef
+        nzShowPagination
+        [nzData]="foodList"
+        >
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of tableRef.data">
+                <td>{{ data.name }}</td>
+                <td>
+                    <nz-avatar [nzShape]="'square'" [nzSize]="100" [nzIcon]="'camera'" [nzSrc]="data.imageUrl ? imageBaseUrl + data.imageUrl : null"></nz-avatar>
+                </td>
+                <td>
+                    <a routerLink="/food/edit-food/{{data.id}}">Edit</a>
+                    <a  nz-popconfirm
+                        nzPopconfirmTitle="Are you sure delete this food?"
+                        (nzOnConfirm)="deleteConfirm(data.id)"
+                        nzPopconfirmPlacement="left"
+                    >
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <button routerLink="/food/add-food" class="m-t-10" nz-button nzType="primary">Add New Food</button>
+</div>

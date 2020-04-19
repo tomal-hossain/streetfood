@@ -1,0 +1,40 @@
+<nz-layout>
+    <nz-header>
+        <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'">
+            <li nz-menu-item>
+                <a routerLink='/food/all-foods'>Home</a>
+            </li>
+            <li nz-menu-item>
+                <a routerLink="/food/my-foods">My Foods</a>
+            </li>
+            <li nz-nz-menu-item class="float-right cursor-pointer">
+                <nz-avatar
+                    nz-popover
+                    [nzPopoverContent]="userTemplate"
+                    nzPopoverPlacement="bottomRight"
+                    nzPopoverTrigger="click"
+                    nzIcon="user"
+                >
+                </nz-avatar>
+            </li>
+        </ul>
+        <ng-template #userTemplate>
+            <ul style="width: 150px;" nz-list>
+                <li *ngIf="!isLogin" nz-list-item>
+                    <a class="w-100" routerLink="/authentication/sign-up"> Sign Up</a>
+                </li>
+                <li *ngIf="!isLogin"  nz-list-item>
+                    <a class="w-100" routerLink="/authentication/login">Login</a>
+                </li>
+                <li *ngIf="isLogin" (click)="logout()" nz-list-item>
+                    <a class="w-100">
+                        <i nz-icon nzType="logout"></i>
+                        <span class="m-l-15">Logout</span>
+                    </a>
+                </li>
+            </ul>
+          </ng-template>
+    </nz-header>
+    <router-outlet></router-outlet>
+    <nz-footer></nz-footer>
+</nz-layout>

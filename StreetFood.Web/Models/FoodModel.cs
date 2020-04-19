@@ -1,4 +1,5 @@
 ﻿using StreetFood.Domain.Models;
+using System;
 using System.Collections.Generic;
 
 namespace StreetFood.Web.Models
@@ -10,6 +11,7 @@ namespace StreetFood.Web.Models
         public string ImageUrl { get; set; }
         public string Description { get; set; }
         public ICollection<Country> PopularInList { get; set; }
+        public DateTime? AddedAt { get; set; }
         public string AddedByName { get; set; }
     }
 }
