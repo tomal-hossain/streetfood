@@ -1,0 +1,12 @@
+<div class="w-90 m-auto">
+    <nz-card [nzTitle]="selectedFood?.name">
+        <h5>Written By: {{selectedFood?.addedByName}}</h5>
+        <h6> {{selectedFood?.addedAt}} | date</h6>
+        <div class="w-100">
+            <img *ngIf="selectedFood?.imageUrl" [src]="imageBaseUrl + selectedFood?.imageUrl" style="width: 350px;" class="display-block m-auto">
+        </div>
+        <p>{{selectedFood?.description}}</p>
+        <h5>Popular In: </h5>
+        <nz-tag class="m-l-10" *ngFor="let item of selectedFood?.popularInList">{{item.name}}</nz-tag>
+    </nz-card>
+</div>

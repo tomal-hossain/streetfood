@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,6 +61,7 @@ namespace StreetFood.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<StreetFoodDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserService, UserService>();

@@ -5,11 +5,12 @@ namespace StreetFood.Service.Interfaces
 {
     public interface IFoodService
     {
-        public List<Food> GetAllFoods();
-        public Food GetFood(int id);
-        public int AddFood(int userId, Food food);
-        public bool IsFoodExist(int userId, int foodId);
-        public bool UpdateFood(Food food);
-        public bool DeleteFood(int id);
+        List<Food> GetAllFoods(int userId = 0);
+        Food GetFood(int id);
+        bool AddFood(int userId, Food food);
+        bool IsFoodExist(int userId, int foodId);
+        bool UpdateFood(Food food);
+        bool DeleteFood(int id);
+        List<Country> GetAllCountries();
     }
 }

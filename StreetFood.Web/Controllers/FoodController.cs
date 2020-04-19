@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StreetFood.Domain.Models;
 using StreetFood.Service.Interfaces;
@@ -38,6 +37,19 @@ namespace StreetFood.Web.Controllers
             return Ok(foodModels);
         }
 
+        [HttpGet, Route("ownfood")]
+        public ActionResult<List<FoodModel>> GetMyFoods()
+        {
+            int userId = _userService.GetUserIdFromRequest(Request);
+            if (userId > 0)
+            {
+                List<Food> foods = _foodService.GetAllFoods(userId);
+                List<FoodModel> foodModels = _mapper.Map<List<FoodModel>>(foods);
+                return Ok(foodModels);
+            }
+            return BadRequest();
+        }
+
         [HttpGet, Route("{id}")]
         public ActionResult<FoodModel> GetFood(int id)
         {
@@ -59,10 +71,10 @@ namespace StreetFood.Web.Controllers
                 return Unauthorized();
             }
             Food food = _mapper.Map<Food>(foodModel);
-            int foodId = _foodService.AddFood(userId, food);
-            if (foodId > 0)
+            bool status = _foodService.AddFood(userId, food);
+            if (status)
             {
-                return Ok(new { Id = foodId });
+                return Ok();
             }
             return BadRequest();
         }
@@ -82,8 +94,17 @@ namespace StreetFood.Web.Controllers
             bool isFoodExist = _foodService.IsFoodExist(userId, foodModel.Id);
             if (isFoodExist)
             {
-                Food food = _mapper.Map<Food>(foodModel);
-                bool status = _foodService.UpdateFood(food);
+                Food food = _foodService.GetFood(foodModel.Id);
+                if(food.ImageUrl != foodModel.ImageUrl)
+                {
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", food.ImageUrl);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+                Food updatedFood = _mapper.Map<FoodModel, Food>(foodModel, food);
+                bool status = _foodService.UpdateFood(updatedFood);
                 if (status)
                 {
                     return Ok();
@@ -103,11 +124,43 @@ namespace StreetFood.Web.Controllers
             bool isFoodExist = _foodService.IsFoodExist(userId, foodId);
             if (isFoodExist)
             {
+                Food food = _foodService.GetFood(foodId);
+                if (food.ImageUrl != null)
+                {
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", food.ImageUrl);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
                 bool status = _foodService.DeleteFood(foodId);
                 if (status)
                 {
                     return Ok();
                 }
+            }
+            return BadRequest();
+        }
+
+        [HttpGet, Route("country")]
+        public ActionResult<List<Country>> GetCountries()
+        {
+            List<Country> countries = _foodService.GetAllCountries();
+            return Ok(countries);
+        }
+
+        [HttpPost, Route("image")]
+        public async Task<ActionResult> UploadImageAsync([FromForm] FileModel fileModel)
+        {
+            if (fileModel.File != null && fileModel.File.Length > 0)
+            {
+                var fileName = Guid.NewGuid().ToString() + '_' + Path.GetFileName(fileModel.File.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await fileModel.File.CopyToAsync(fileStream);
+                }
+                return Ok(new { Url = fileName });
             }
             return BadRequest();
         }
