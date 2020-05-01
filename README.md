@@ -1,5 +1,5 @@
 # Street Food
-A complete backend and frontend project structure developed developed using Angular 8and ASP.NET Core 3.1
+A complete backend and frontend project structure developed using Angular 8 and ASP.NET Core 3.1
 
 ## This application consists of:
     * Template pages using Angular 8 and TypeScript
