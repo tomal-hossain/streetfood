@@ -11,4 +11,4 @@ A complete backend and frontend project structure developed using Angular 8 and 
 
 ## Features
     * Public Registration, Email Confirmation, Password Recovery & Reset
-    * Display all avaiable foods to all users. User needs to login to add his own food and later update add delete
+    * Display all available foods to all users. User needs to login to add his own food and later update add delete
