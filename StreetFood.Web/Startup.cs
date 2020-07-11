@@ -91,6 +91,10 @@ namespace StreetFood.Web
 
             app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

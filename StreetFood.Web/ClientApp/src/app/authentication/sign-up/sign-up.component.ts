@@ -1,3 +1,4 @@
+import { FormService } from './../../../shared/service/form.service';
 import { AuthService } from './../../../shared/service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -17,7 +18,8 @@ export class SignUpComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private authService: AuthService,
-        private router: Router
+        private router: Router,
+        private formService: FormService
         ) { }
 
     ngOnInit() {
@@ -37,17 +39,9 @@ export class SignUpComponent implements OnInit {
         }
     }
 
-    makeFormDirty(form: FormGroup) {
-        Object.keys(form.controls).forEach(key => {
-            const control = form.controls[key];
-            control.markAsDirty();
-            control.updateValueAndValidity();
-        });
-    }
-
     submitForm(formValue): void {
         this.errorMessage = null;
-        this.makeFormDirty(this.signUpForm);
+        this.formService.makeFormDirty(this.signUpForm);
         if  (this.signUpForm.valid) {
             this.isLoadingFlag = true;
             const model: ISignUp = {

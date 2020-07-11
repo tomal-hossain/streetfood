@@ -1,3 +1,4 @@
+import { FormService } from './../../../shared/service/form.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthService } from 'src/shared/service/auth.service';
@@ -19,7 +20,8 @@ export class ResetPasswordComponent implements OnInit {
         private fb: FormBuilder,
         private authService: AuthService,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private formService: FormService
         ) { }
 
     ngOnInit() {
@@ -40,17 +42,9 @@ export class ResetPasswordComponent implements OnInit {
         }
     }
 
-    makeFormDirty(form: FormGroup) {
-        Object.keys(form.controls).forEach(key => {
-            const control = form.controls[key];
-            control.markAsDirty();
-            control.updateValueAndValidity();
-        });
-    }
-
     submitForm() {
         this.isErrorMesage = false;
-        this.makeFormDirty(this.resetPasswordForm);
+        this.formService.makeFormDirty(this.resetPasswordForm);
         if  (this.resetPasswordForm.valid) {
             this.isLoadingFlag = true;
             const model: ISignIn = {
