@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StreetFood.Domain.Models;
 using StreetFood.Service.Interfaces;
@@ -13,6 +14,7 @@ namespace StreetFood.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FoodController : ControllerBase
     {
         private readonly IFoodService _foodService;
@@ -29,6 +31,7 @@ namespace StreetFood.Web.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<List<FoodModel>> GetAllFoods()
         {
@@ -50,6 +53,7 @@ namespace StreetFood.Web.Controllers
             return BadRequest();
         }
 
+        [AllowAnonymous]
         [HttpGet, Route("{id}")]
         public ActionResult<FoodModel> GetFood(int id)
         {
@@ -142,6 +146,7 @@ namespace StreetFood.Web.Controllers
             return BadRequest();
         }
 
+        [AllowAnonymous]
         [HttpGet, Route("country")]
         public ActionResult<List<Country>> GetCountries()
         {

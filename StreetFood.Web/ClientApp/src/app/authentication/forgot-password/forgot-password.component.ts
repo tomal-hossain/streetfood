@@ -1,3 +1,4 @@
+import { FormService } from './../../../shared/service/form.service';
 import { AuthService } from './../../../shared/service/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -15,7 +16,8 @@ export class ForgotPasswordComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private authService: AuthService
+        private authService: AuthService,
+        private formService: FormService,
         ) { }
 
     ngOnInit() {
@@ -27,6 +29,7 @@ export class ForgotPasswordComponent implements OnInit {
     submitForm() {
         this.errorMessage = null;
         this.isSuccessMessage = false;
+        this.formService.makeFormDirty(this.forgotPasswordForm);
         if  (this.forgotPasswordForm.valid) {
             this.isLoadingFlag = true;
             this.authService.forgotPassword(this.forgotPasswordForm.value)

@@ -40,7 +40,6 @@ const routes: Routes = [
             {
                 path: 'view-food/:id',
                 component: ViewFoodComponent,
-                canActivate: [AuthGuard]
             }
         ]
     }
