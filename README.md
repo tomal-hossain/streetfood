@@ -3,7 +3,7 @@ A complete backend and frontend project structure developed using Angular 8 and 
 
 ## This application consists of:
     * Template pages using Angular 8 and TypeScript
-    * RESTful API Backend using ASP.NET Core 3.1 (Followed Onion Architecture)
+    * RESTful API Backend using ASP.NET Core 3.1
     * Database using Entity Framework Core (Code first approach)
     * Authentication based on JWT
     * NG Zorro for designing
