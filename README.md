@@ -1,5 +1,5 @@
 # Street Food
-A demop project developed using Angular 8 and ASP.NET Core Web API(3.1)
+A demo project developed using Angular 8 and ASP.NET Core Web API(3.1)
 
 ## This application consists of:
     * Template pages using Angular 8 and TypeScript
